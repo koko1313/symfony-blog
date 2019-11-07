@@ -49,8 +49,6 @@ class SecurityController extends AbstractController
      * @Route("/register", methods="POST")
      */
     public function registerUser(Request $req) {
-        $entityManager = $this->getDoctrine()->getManager();
-
         $user = new User();
         $user->setEmail($req->get("email"));
         $user->setRoles(["ROLE_USER"]);
@@ -59,6 +57,7 @@ class SecurityController extends AbstractController
             $req->get("password")
         ));
 
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
 
@@ -68,8 +67,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/logout", name="app_logout")
      */
-    public function logout()
-    {
+    public function logout() {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
 }
