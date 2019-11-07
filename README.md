@@ -1,4 +1,4 @@
-# symfony-blog
+# Symfony Blog
 Symfony test project
 
 ## Версии
