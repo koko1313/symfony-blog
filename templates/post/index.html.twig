@@ -1,0 +1,37 @@
+{%  extends "base.html.twig" %}
+
+{% block pageTitle %}Постове{% endblock %}
+
+{% block content %}
+
+    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+        <div>
+            {{ app.user.email }} <a href="{{ path('app_logout') }}">[изход]</a>
+        </div>
+    {% else %}
+        <a href="{{ path('app_login') }}">Влез</a>
+    {% endif %}
+
+    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+        <a href="{{ path("posts_form") }}">Добави пост</a>
+    {% endif %}
+
+    {% for post in posts %}
+        <div class="border my-2 p-3">
+            <h2>{{ post.id }} {{ post.title }}</h2>
+
+            <p>{{ post.description }}</p>
+
+            <p>Написано от: <em>{{ post.user.email }}</em></p>
+
+            {% if (is_granted("delete", post)) %}
+                <a href="{{ path("posts_delete", {id: post.id}) }}" class="btn btn-danger" onClick="return confirm('Изтриване?')">Изтрий</a>
+            {% endif %}
+
+            {% if(is_granted("edit", post)) %}
+                <a href="{{ path("posts_edit", {id: post.id}) }}" class="btn btn-warning">Редактирай</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

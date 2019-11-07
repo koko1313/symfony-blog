@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block pageTitle %}Добави пост{% endblock %}
+
+{% block content %}
+    <a href="{{ path("posts_index") }}">Постове</a>
+
+    <form method="POST">
+        <label for="title">Заглавие</label>
+        <input type="text" id="title" name="title" class="form-control"
+            {% if post %}
+                value = "{{ post.title }}"
+            {% endif %}
+            >
+
+        <label for="description">Описание</label>
+        <textarea name="description" id="description" class="form-control">{% if post %}{{ post.description }}{% endif %}</textarea>
+
+        {% if post %}
+            <button type="submit" class="btn btn-warning form-contol">Редактирай</button>
+        {% else %}
+            <button type="submit" class="btn btn-success form-control">Запиши</button>
+        {% endif %}
+    </form>
+
+{% endblock %}
